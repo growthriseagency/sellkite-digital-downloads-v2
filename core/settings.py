@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+    'shopify_auth',
+    'apps.auth_app',
     'apps.plans',
     'apps.stores',
     'apps.products',
@@ -71,6 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'shopify_auth.context_processors.shopify_auth',
             ],
         },
     },
@@ -137,3 +141,23 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React default
     "http://127.0.0.1:3000",
 ]
+
+# Shopify Auth Settings
+SHOPIFY_APP_NAME = "Sellkite Digital Downloads V2" # TODO: Replace with your app name
+SHOPIFY_APP_API_KEY = '26727cd1fe6ac7420d89f71603a53536' # TODO: Replace with your API key
+SHOPIFY_APP_API_SECRET = '6ee51c734ec157e3358d5e424750893a' # TODO: Replace with your API secret
+SHOPIFY_APP_API_SCOPE = ['read_products', 'read_orders'] # TODO: Adjust scopes as needed
+SHOPIFY_APP_API_VERSION = "2024-04" # TODO: Replace with a current, valid API version
+SHOPIFY_APP_DEV_MODE = False # WARNING: NEVER set to True in production
+
+AUTHENTICATION_BACKENDS = (
+    'shopify_auth.backends.ShopUserBackend',
+)
+
+AUTH_USER_MODEL = 'auth_app.AuthAppShopUser' # Corrected: app_label.ModelName
+
+LOGIN_REDIRECT_URL = '/'
+
+SHOPIFY_AUTH_BOUNCE_PAGE_URL = '/login/bounce/' # Added for shopify_auth
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

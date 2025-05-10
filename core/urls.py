@@ -16,12 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from apps.auth_app import views as auth_views # Import the views from auth_app
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('apps.plans.urls')),
-    path('', include('apps.stores.urls')),
-    path('', include('apps.products.urls')),
-    path('', include('apps.webhooks.urls')),
-    path('', include('apps.downloads.urls')),
+    path('login/', include('shopify_auth.urls')), # Shopify auth URLs
+    path('', auth_views.home, name='home'),        # Our new homepage view at the root
+    
+    # Prefixing other app URLs:
+    path('plans/', include('apps.plans.urls')),
+    path('stores/', include('apps.stores.urls')),
+    path('products/', include('apps.products.urls')),
+    path('webhooks/', include('apps.webhooks.urls')),
+    path('downloads/', include('apps.downloads.urls')),
 ]

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopify Authenticated Home</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; background-color: #f4f6f8; color: #333; }
+        .container { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #5a31f4; }
+        h2 { color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        p { line-height: 1.6; }
+        .token { 
+            word-break: break-all; 
+            background-color: #e9ecef; 
+            padding: 10px; 
+            border-radius: 4px; 
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .error { color: red; font-weight: bold; }
+        .success { color: green; }
+        .product-list { list-style: none; padding: 0; }
+        .product-list li { background-color: #f9f9f9; margin-bottom: 10px; padding: 10px; border-radius: 4px; border: 1px solid #eee;}
+        .api-info { font-size: 0.8em; color: #777; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome!</h1>
+        <p>You are logged in to your Shopify store.</p>
+
+        <h2>Shop Details:</h2>
+        {% if error_message %}
+            <p class="error">Error fetching shop details: {{ error_message }}</p>
+            <p class="api-info">Using API Key: {{ shopify_app_api_key }}</p>
+        {% elif shop_details %}
+            <p class="success">Successfully fetched shop details!</p>
+            <p><strong>Shop URL:</strong> {{ shop_url }}</p>
+            <p><strong>Shop Name:</strong> {{ shop_details.name }}</p>
+            <p><strong>Email:</strong> {{ shop_details.email }}</p>
+            <p><strong>Plan:</strong> {{ shop_details.plan_display_name }}</p>
+        {% else %}
+            <p>Could not fetch shop details.</p>
+        {% endif %}
+
+        <h2>Access Token:</h2>
+        <p><em>(This is your Shopify Access Token. Be careful with it in production.)</em></p>
+        <div class="token">{{ access_token }}</div>
+
+        <h2>Products (First 5):</h2>
+        {% if not error_message and products %}
+            <ul class="product-list">
+                {% for product in products %}
+                    <li>{{ product.title }}</li>
+                {% empty %}
+                    <li>No products found or could not fetch products.</li>
+                {% endfor %}
+            </ul>
+        {% elif error_message and not products %}
+             <p>Could not fetch products due to the error above.</p>
+        {% else %}
+            <p>No products found or could not fetch products.</p>
+        {% endif %}
+
+        <div class="api-info">
+            <p>Attempted to use API Key for calls: {{ shopify_app_api_key }}</p>
+            <p><a href="/login/logout/">Logout</a></p>
+        </div>
+    </div>
+</body>
+</html> 
