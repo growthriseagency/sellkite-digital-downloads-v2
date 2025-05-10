@@ -1,0 +1,19 @@
+---
+description: Always use this rule if we are implementing any Front END in Next JS
+globs: 
+alwaysApply: false
+---
+# Cursor Rule: Use Shopify Polaris for UI Development
+
+This rule ensures consistency and adherence to design best practices by mandating the use of Shopify Polaris for all UI-related tasks.
+
+## Guideline
+- When implementing new UI features or making changes to existing UI, Shopify Polaris components and design principles must be used.
+- Refer to Context 7 MCP for guidance and examples on implementing Shopify Polaris.
+
+## Enforcement
+- **Severity:** error
+- **Autofix:** false
+
+## Rationale
+Using Shopify Polaris provides a cohesive user experience, aligns with industry standards, and leverages a well-documented and maintained design system. Context 7 MCP offers specific implementation guidance for our project.

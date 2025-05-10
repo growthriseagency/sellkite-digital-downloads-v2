@@ -1,0 +1,22 @@
+---
+description: Only use these rules when working on any frontend for the application. (Like React Files, JS files, TSX files, HTML)
+globs: 
+alwaysApply: false
+---
+# API Contract Enforcement Rule
+
+Whenever you implement or update any frontend code that interacts with the backend API:
+
+- **ALWAYS reference `docs/api_docs.md` for every API call.**
+- **Verify:**
+  - The endpoint URL and HTTP method match the documentation.
+  - The request payload (body, query params, headers) matches the documented schema.
+  - The response structure matches the documentation.
+  - The status codes and error payloads are handled as described.
+  - Authentication requirements are respected as documented.
+
+If any discrepancy is found between the frontend code and `api_docs.md`:
+- Pause implementation and resolve the mismatch.
+- Update the frontend to match the documentation, or update `api_docs.md` (and backend, if needed) if the documentation is out of date.
+
+**No API call should be implemented, changed, or merged unless it is fully aligned with the latest `docs/api_docs.md` for URL, payload, response, and status codes.**

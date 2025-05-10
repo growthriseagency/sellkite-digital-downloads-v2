@@ -1,0 +1,27 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Cursor Rule: Enforce Project Directory Structure for Digital Downloads API
+
+This rule should always be checked to ensure the codebase remains organized and maintainable.
+
+## Directory Structure Requirements
+- `apps/` directory exists at project root
+- Each major domain (plans, stores, products, orders, webhooks, emails, payments, utils) is a Django app inside `apps/`
+- Each app contains at least: `models.py`, `serializers.py`, `views.py`, `urls.py`, `tests.py` (where applicable)
+- `core/` contains only Django project settings, root urls, wsgi/asgi, and `__init__.py`
+- `scripts/` for one-off scripts, migrations, PRD, etc.
+- `instructions/` for documentation and requirements
+- `env/` for virtual environment (should be in .gitignore)
+- No business logic or API code in `core/` or project root
+- All new features must be added as new apps or within the correct app in `apps/`
+- `utils/` for shared code, storage, celery tasks, etc.
+
+## Enforcement
+- **Severity:** error
+- **Autofix:** false
+
+## Rationale
+This structure ensures scalability, maintainability, and clear separation of concerns, following Django and SaaS best practices for a growing API product. 
